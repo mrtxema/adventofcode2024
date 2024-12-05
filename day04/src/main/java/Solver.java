@@ -1,5 +1,6 @@
 import common.movement.Direction;
 import common.movement.Position;
+import common.parser.CharGrid;
 import common.parser.IOUtils;
 
 import java.util.List;

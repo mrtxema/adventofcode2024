@@ -1,3 +1,5 @@
+package common.parser;
+
 import common.movement.Position;
 
 import java.util.List;
