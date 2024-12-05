@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -33,6 +34,39 @@ public final class IOUtils {
 
     public static char[][] readCharMap(URL resource) {
         return readTrimmedLines(resource).stream().map(String::toCharArray).toArray(char[][]::new);
+    }
+
+    public static List<List<String>> splitSections(List<String> lines, int maxSections) {
+        List<List<String>> result = new ArrayList<>();
+        int index = 0;
+        while (index < lines.size()) {
+            var newSection = getNextSection(lines, index, result.size() < maxSections - 1);
+            if (!newSection.content().isEmpty()) {
+                result.add(newSection.content());
+            }
+            index = newSection.endIndex();
+        }
+        return result;
+    }
+
+    private static SectionResult getNextSection(List<String> lines, int startIndex, boolean stopOnEmptyLine) {
+        int index = startIndex;
+        boolean anyContent = false;
+        List<String> newSection = new ArrayList<>();
+        while (index < lines.size()) {
+            var line = lines.get(index++);
+            if (anyContent && line.isEmpty() && stopOnEmptyLine) {
+                break;
+            }
+            anyContent |= !line.isEmpty();
+            if (anyContent) {
+                newSection.add(line);
+            }
+        }
+        return new SectionResult(newSection, index);
+    }
+
+    private record SectionResult(List<String> content, int endIndex) {
     }
 
     private static <T> List<T> readLines(URL resource, Function<String, String> transformer, Parser<T> parser) throws ParsingException {

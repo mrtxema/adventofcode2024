@@ -11,5 +11,6 @@ echo Creating module $DAY
 mkdir $DAY
 cp -r template/* $DAY
 echo "include '$DAY'" >> settings.gradle
+git add $DAY
 
 echo Module $DAY created

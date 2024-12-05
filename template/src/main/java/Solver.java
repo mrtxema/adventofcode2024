@@ -12,7 +12,7 @@ public class Solver {
     }
 
     public Solver parseFile() {
-        locationPairs = IOUtils.readTrimmedLines(getClass().getResource(fileName), myDataParser);
+        myDataList = IOUtils.readTrimmedLines(getClass().getResource(fileName), myDataParser);
         return this;
     }
 
