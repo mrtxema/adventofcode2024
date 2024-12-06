@@ -1,17 +1,16 @@
 package common.parser;
 
 import common.movement.Position;
-
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 
 public class CharGrid {
-    private final List<String> lines;
+    private final char[][] chars;
     private final int maxX;
 
-    public CharGrid(List<String> lines) {
-        this.lines = lines;
-        this.maxX = lines.stream().mapToInt(String::length).max().orElse(0);
+    public CharGrid(char[][] chars) {
+        this.chars = chars;
+        this.maxX = Arrays.stream(chars).mapToInt(row -> row.length).max().orElse(0);
     }
 
     public int getMaxX() {
@@ -19,17 +18,17 @@ public class CharGrid {
     }
 
     public int getMaxY() {
-        return lines.size();
+        return chars.length;
     }
 
     public Optional<Character> getChar(Position position) {
         if (position.y() < 0 || position.y() >= getMaxY()) {
             return Optional.empty();
         }
-        var line = lines.get(position.y());
-        if (position.x() < 0 || position.x() >= line.length()) {
+        var row = chars[position.y()];
+        if (position.x() < 0 || position.x() >= row.length) {
             return Optional.empty();
         }
-        return Optional.of(line.charAt(position.x()));
+        return Optional.of(row[position.x()]);
     }
 }

@@ -3,30 +3,27 @@ import common.movement.Position;
 import common.parser.CharGrid;
 import common.parser.IOUtils;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Solver {
     private final String fileName;
-    private List<String> lines;
+    private CharGrid grid;
 
     public Solver(String fileName) {
         this.fileName = fileName;
     }
 
     public Solver parseFile() {
-        lines = IOUtils.readTrimmedLines(getClass().getResource(fileName));
+        grid = new CharGrid(IOUtils.readCharMap(getClass().getResource(fileName)));
         return this;
     }
 
     public long part1() {
-        var grid = new CharGrid(lines);
         return countWordOccurrences(grid, "XMAS");
     }
 
     public long part2() {
-        var grid = new CharGrid(lines);
         return countCrossedMassOccurrences(grid);
     }
 
