@@ -22,13 +22,16 @@ public class CharGrid {
     }
 
     public Optional<Character> getChar(Position position) {
+        if (!isInBounds(position)) {
+            return Optional.empty();
+        }
+        return Optional.of(chars[position.y()][position.x()]);
+    }
+
+    public boolean isInBounds(Position position) {
         if (position.y() < 0 || position.y() >= getMaxY()) {
-            return Optional.empty();
+            return false;
         }
-        var row = chars[position.y()];
-        if (position.x() < 0 || position.x() >= row.length) {
-            return Optional.empty();
-        }
-        return Optional.of(row[position.x()]);
+        return position.x() >= 0 && position.x() < chars[position.y()].length;
     }
 }
