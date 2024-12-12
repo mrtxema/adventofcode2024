@@ -3,6 +3,8 @@ package common.parser;
 import common.movement.Position;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class CharGrid {
     private final char[][] chars;
@@ -19,6 +21,12 @@ public class CharGrid {
 
     public int getMaxY() {
         return chars.length;
+    }
+
+    public Stream<Position> getAllPositions() {
+        return IntStream.range(0, getMaxY()).boxed()
+                .flatMap(y -> IntStream.range(0, getMaxX()).mapToObj(x -> new Position(x, y)))
+                .filter(this::isInBounds);
     }
 
     public Optional<Character> getChar(Position position) {
