@@ -36,6 +36,10 @@ public final class IOUtils {
         return readTrimmedLines(resource).stream().map(String::toCharArray).toArray(char[][]::new);
     }
 
+    public static List<List<String>> splitSections(List<String> lines) {
+        return splitSections(lines, Integer.MAX_VALUE);
+    }
+
     public static List<List<String>> splitSections(List<String> lines, int maxSections) {
         List<List<String>> result = new ArrayList<>();
         int index = 0;
