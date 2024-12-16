@@ -29,6 +29,14 @@ public class CharGrid {
                 .filter(this::isInBounds);
     }
 
+    public Stream<Position> findPositions(char symbol) {
+        return getAllPositions().filter(p -> getChar(p).filter(c -> c == symbol).isPresent());
+    }
+
+    public Optional<Position> findPosition(char symbol) {
+        return findPositions(symbol).findAny();
+    }
+
     public Optional<Character> getChar(Position position) {
         if (!isInBounds(position)) {
             return Optional.empty();
