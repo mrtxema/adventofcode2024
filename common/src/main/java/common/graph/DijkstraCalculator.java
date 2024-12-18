@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalLong;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,13 +17,17 @@ public class DijkstraCalculator<T> {
     }
 
     public long calculateShortestDistanceFrom(T startNode) {
+        return isReachable(startNode).orElseThrow(() -> new IllegalStateException("No solution found"));
+    }
+
+    public OptionalLong isReachable(T startNode) {
         var queue = new GraphDistanceCalculationQueue<>(graph.getNodeComparator());
         queue.add(startNode, 0);
         while (queue.isNotEmpty()) {
             T current = queue.pop();
             var currentDistance = queue.getDistance(current);
             if (graph.isEndNode(current)) {
-                return currentDistance;
+                return OptionalLong.of(currentDistance);
             }
             for (Map.Entry<T, Long> entry : graph.getAdjacentNodesWithDistance(current).entrySet()) {
                 T candidate = entry.getKey();
@@ -32,7 +37,7 @@ public class DijkstraCalculator<T> {
                 }
             }
         }
-        throw new IllegalStateException("No solution found");
+        return OptionalLong.empty();
     }
 
     public Set<T> getAllShortestPathsNodesFrom(T startNode) {
