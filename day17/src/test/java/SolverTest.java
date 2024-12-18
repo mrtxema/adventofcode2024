@@ -12,8 +12,8 @@ class SolverTest {
 
     @Test
     void testPart2() {
-        long result = initSolver("test2.txt").part2();
-        assertThat(result).isEqualTo(117440);
+        assertThat(initSolver("test2.txt").part2()).isEqualTo(117440);
+        assertThat(initSolver("input.txt").part2()).isEqualTo(202322936867370L);
     }
 
     private Solver initSolver(String fileName) {
