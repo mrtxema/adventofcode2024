@@ -42,6 +42,10 @@ public class DijkstraCalculator<T> {
 
     public Set<T> getAllShortestPathsNodesFrom(T startNode) {
         var queue = new GraphDistanceCalculationQueue<>(graph.getNodeComparator());
+        return getAllShortestPathsNodesFrom(startNode, queue);
+    }
+
+    public Set<T> getAllShortestPathsNodesFrom(T startNode, GraphDistanceCalculationQueue<T> queue) {
         var paths = new HashMap<T, List<NodePath<T>>>();
         queue.add(startNode, 0);
         paths.put(startNode, new ArrayList<>(List.of(new NodePath<>(List.of(startNode)))));

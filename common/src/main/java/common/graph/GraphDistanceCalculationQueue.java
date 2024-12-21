@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-class GraphDistanceCalculationQueue<T> {
+public class GraphDistanceCalculationQueue<T> {
     private static final long INFINITE_DISTANCE = Long.MAX_VALUE / 2;
     private final Map<T, Long> distances;
     private final TreeSet<WeightedValue<T>> queue;
 
-    GraphDistanceCalculationQueue(Comparator<T> nodeComparator) {
+    public GraphDistanceCalculationQueue(Comparator<T> nodeComparator) {
         this.distances = new HashMap<>();
         this.queue = new TreeSet<>(WeightedValue.comparator(nodeComparator));
     }
@@ -29,7 +29,7 @@ class GraphDistanceCalculationQueue<T> {
         return value != null ? value.value() : null;
     }
 
-    long getDistance(T state) {
+    public long getDistance(T state) {
         return distances.getOrDefault(state, INFINITE_DISTANCE);
     }
 
